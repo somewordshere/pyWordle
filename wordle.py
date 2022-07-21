@@ -6,28 +6,28 @@ with open("wordlist.10000.txt", "r") as file:
     random_word = random.choice(words).upper()
     while len(random_word) != 5:
         random_word = random.choice(words).upper()
-    print(random_word)
 
 
 def grammar_check(word):
-    user_word = str(input()).upper()
+    user_word = word
     while len(user_word) != 5:
-        user_word = str(input("5 characters only: "))
+        user_word = str(input("5 characters only!\nTry again "))
     if not user_word.isalpha():
-        user_word = str(input("Only characters: ")).isalpha()
+        user_word = str(input("No digits\nTry again: ")).isalpha()
+    if word in words:
+        print("success")
     return user_word
 
 
 def check(random_word):
     tries = 6
-    win = False
-    check_word = []
     for i in range(tries):
         check_word = []
-        user_word = input("Enter your word: ").upper()
+        user_word = input(F"{i+1}/6 tries. Enter your word: ").upper()
+        temp_word = grammar_check(user_word)
+        user_word = temp_word
         if user_word == random_word:
-            print(f"Your guessed!, it's {random_word}")
-            win = True
+            print(f"\nYour guessed, it's {random_word}")
             exit()
         else:
             for a in range(len(random_word)):
@@ -38,14 +38,14 @@ def check(random_word):
                 elif user_word[a] != random_word[a]:
                     check_word.append("x")
 
-        print(*check_word)
+        print(*check_word, sep="|")
 
     if tries > 0:
         print("\nYou're our of tries!")
 
 
-def start():
+def main():
     check(random_word)
 
-
-start()
+if __name__ == "__main__":
+    main()
